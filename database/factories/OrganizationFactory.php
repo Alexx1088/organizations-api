@@ -22,4 +22,9 @@ class OrganizationFactory extends Factory
             'building_id' => Building::factory(),
         ];
     }
+
+    public function hasPhones(int $count = 1): Factory|OrganizationFactory
+    {
+        return $this->has(\App\Models\Phone::factory()->count($count));
+    }
 }
