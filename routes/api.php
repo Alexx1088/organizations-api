@@ -19,6 +19,7 @@ Route::middleware(['validate.api_key'])->group(function () {
 
     Route::get('organization/{organization_id}', [OrganizationController::class, 'organizationById']);
 
+    Route::get('activities/{activity_id}/organizations', [ActivityController::class, 'organizationsByActivityTree']);
 });
 
 
