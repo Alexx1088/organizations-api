@@ -20,8 +20,10 @@ Route::middleware(['validate.api_key'])->group(function () {
     Route::get('organization/{organization_id}', [OrganizationController::class, 'organizationById']);
 
     Route::get('activities/{activity_id}/organizations', [ActivityController::class, 'organizationsByActivityTree']);
-});
 
+    Route::get('organizations/search', [OrganizationController::class, 'companySearch']);
+
+});
 
 Route::post('login', [\App\Http\Controllers\AuthController::class, 'login']);
 

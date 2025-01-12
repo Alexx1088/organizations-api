@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrganizationByRectangleRequest;
+use App\Http\Requests\SearchOrganizationRequest;
 use App\Http\Resources\OrganizationByIdResource;
 use App\Http\Resources\OrganizationResource;
+use App\Http\Resources\OrganizationSearchResource;
 use App\Models\Organization;
+use Illuminate\Http\Request;
 
 class OrganizationController extends Controller
 {
@@ -40,5 +43,26 @@ return response()->json([
         return response()->json([
             new OrganizationByIdResource($organization),
         ]);
+    }
+
+    public function companySearch(SearchOrganizationRequest $request): \Illuminate\Http\JsonResponse
+    {
+        $query = $request->input('name');
+
+        $organizations = Organization::where('name', 'like', "%{$query}%")
+            ->with('building')
+            ->with('activities')
+            ->with('phones')
+            ->get();
+
+        if ($organizations->isEmpty()) {
+            return response()->json(['message' => 'No organizations found matching the given name.']);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => OrganizationSearchResource::collection($organizations),
+        ]);
+
     }
 }
