@@ -7,7 +7,7 @@ use App\Models\Activity;
 
 class ActivityController extends Controller
 {
-   public function organizationsByActivity( $activity_id): \Illuminate\Http\JsonResponse
+   public function organizationsByActivity(int $activity_id): \Illuminate\Http\JsonResponse
    {
        $activity = Activity::findOrFail($activity_id);
 
