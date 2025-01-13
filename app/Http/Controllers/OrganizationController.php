@@ -25,7 +25,7 @@ class OrganizationController extends Controller
         use ($minLat, $maxLat, $minLng, $maxLng) {
             $query->whereBetween('latitude', [$minLat, $maxLat])
                 ->whereBetween('longitude', [$minLng, $maxLng]);
-        })->paginate(10);
+        })->with('building')->paginate(10);
 
         if ($organizations->isEmpty()) {
             return response()->json(['message' => 'No organizations found within the specified area.'], 200);
